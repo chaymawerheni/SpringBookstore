@@ -1,6 +1,10 @@
 package com.vermeg.ams.bookstore.controllers;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.vermeg.ams.bookstore.entities.Book;
 import com.vermeg.ams.bookstore.repository.BookRepository;
@@ -22,6 +28,8 @@ import javax.validation.Valid;
 @RequestMapping("/book/")
 
 public class BookController {
+	public static String uploadDirectory =
+			System.getProperty("user.dir")+"/src/main/resources/static/uploads";
 	
 	private final BookRepository bookRepository;
 
@@ -44,13 +52,31 @@ public class BookController {
 
     @PostMapping("add")
     //@ResponseBody
-    public String addBook(@Valid Book book, BindingResult result, Model model) {
-        if (result.hasErrors()) {
+    public String addBook(@Valid Book book, BindingResult result,
+			@RequestParam(name = "bookId", required = false) Long p,
+			@RequestParam("files") MultipartFile[] files) {
+       /* if (result.hasErrors()) {
             return "book/addBook";
         }
         //System.out.println(book);
         bookRepository.save(book);
-        return "redirect:list";
+        return "redirect:list";*/
+    	// part upload
+    			StringBuilder fileName = new StringBuilder();
+    			MultipartFile file = files[0];
+    			Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
+    			fileName.append(file.getOriginalFilename());
+
+    			try {
+    				Files.write(fileNameAndPath, file.getBytes());
+    			} catch (IOException e) {
+    				e.printStackTrace();
+    			}
+    			book.setPicture(fileName.toString());
+
+    			bookRepository.save(book);
+    			return "redirect:list";
+    	
     }
   
     @GetMapping("delete/{id}")
@@ -77,6 +103,13 @@ public class BookController {
         bookRepository.save(book);
         model.addAttribute("books", bookRepository.findAll());
         return "book/listeBooks";
+    }
+    @GetMapping("show/{id}")
+    public String showArticleDetails(@PathVariable("id") long id, Model model)
+    {
+    Book book = bookRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid provider Id:" + id));
+    model.addAttribute("book", book);
+    return "book/showBook";
     }
 
 

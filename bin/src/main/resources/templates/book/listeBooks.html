@@ -32,7 +32,6 @@
                                         <th>Author</th>
                                         <th>Prix</th>
                                         <th>Date de creation</th>
-                                        <th>Show</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
@@ -43,7 +42,6 @@
                                         <td th:text="${book.author}"></td>
                                         <td th:text="${book.prix}"></td>
                                         <td th:text="${book.datecreation}"></td>
-                                        <td><a th:href="@{/book/show/{id}(id=${book.id})}" class="btn btn-primary"><i class="fas fa-user-show ml-2"></i>Show details</a></td>
                                         <td><a th:href="@{/book/edit/{id}(id=${book.id})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
                                         <td><a th:href="@{/book/delete/{id}(id=${book.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
                                     </tr>

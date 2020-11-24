@@ -30,6 +30,9 @@ public class Book {
     @Column(name = "datecreation")
     private String datecreation;
     
+    @Column(name = "picture")
+    private String picture;
+    
     
     public Book() {}
 
@@ -83,6 +86,14 @@ public class Book {
 	public void setPrix(String prix) {
 		this.prix = prix;
 	}
+	
+	public void setPicture(String picture) {
+		this.picture = picture;
+		}
+
+		public String getPicture() {
+		return picture;
+		}
 
 	@Override
 	public String toString() {
