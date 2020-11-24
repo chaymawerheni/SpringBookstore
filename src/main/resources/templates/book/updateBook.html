@@ -15,7 +15,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="col-md-8">
-                    <form action="#" th:action="@{/book/update/{id}(id=${book.id})}" th:object="${book}" method="post">
+                    <form action="#" th:action="@{/book/update/{id}(id=${book.id})}" th:object="${book}" method="post" enctype="multipart/form-data">
                         <div class="row">
                         
                             <div class="form-group col-md-8">
@@ -31,11 +31,22 @@
 							<div class="form-group col-md-8">
                                 <label for="datecreation" class="col-form-label">Date de la creation</label> <input type="date" th:field="*{datecreation}" class="form-control" id="datecreation" placeholder="Date de la creation"> <span th:if="${#fields.hasErrors('datecreation')}" th:errors="*{datecreation}" class="text-danger"></span>
                             </div>
+                            <div class="form-group col-md-8"> 
+                           	    <label for="price" class="col-form-label">Picture</label> <input class="form-control" type="file" name="files" multiple>
+                   			<div class="form-group col-md-6">
 
+								<img alt="Image" th:src="@{'/uploads/'+${book.picture}}" width="250" height="250" />
+							</div>
+                           
+                           
+                           
+                           
+                           </div>
                             <div class="form-group col-md-8">
                                 <input type="submit" class="btn btn-primary" value="Update Book">
                             </div>
-                        </div>
+                            
+                         </div>
                     </form>
                 </div>
             </div>

@@ -94,14 +94,41 @@ public class BookController {
         return "book/updateBook";
     }
     @PostMapping("update/{id}")
-    public String updateBook(@PathVariable("id") long id, @Valid Book book, BindingResult result,
-        Model model) {
-        if (result.hasErrors()) {
+    public String updateBook(@PathVariable("id") long id, @Valid Book book, BindingResult result,Model model,
+		@RequestParam(name = "bookId", required = false) Long p,
+		@RequestParam("files") MultipartFile[] files) {
+
+       /* if (result.hasErrors()) {
             book.setId(id);
             return "book/updateBook";
-        }
-        bookRepository.save(book);
-        model.addAttribute("books", bookRepository.findAll());
+        }*/
+       
+    	
+    	
+    	
+    	StringBuilder fileName = new StringBuilder();
+		MultipartFile file = files[0];
+		Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
+		fileName.append(file.getOriginalFilename());
+
+		
+		
+		if(fileNameAndPath!=null) {
+			try {
+				Files.write(fileNameAndPath, file.getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			book.setPicture(fileName.toString());    
+		}
+		else {
+			
+			book.setPicture(book.getPicture()); 
+		}
+	
+		 bookRepository.save(book);
+	     model.addAttribute("books", bookRepository.findAll());
+	
         return "book/listeBooks";
     }
     @GetMapping("show/{id}")
