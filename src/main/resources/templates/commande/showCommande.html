@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Show Book</title>
+<title>Details de Commandes </title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -16,50 +16,34 @@
 </head>
 <body>
 	<div class="container my-5">
-		<h3 align="center">Book details</h3>
+		<h3 align="center">Details de Commande </h3>
 		<div class="card">
 			<div class="card-body">
 				<div class="col-md-8">
 					<form action="#" method="">
 						<div class="row">
 							<div class="form-group col-md-6">
-
-								<label for="label" class="col-form-label">ID</label>
-
-								<p th:text="${book.id}">Id</p>
+								<label for="label" class="col-formlabel">Date de Commande</label>
+								<p th:text="${commande.datecommande}">Date de Commande</p>
 							</div>
 
 							<div class="form-group col-md-6">
-
-								<label for="label" class="col-form-label">Titre</label>
-
-								<p th:text="${book.titre}">Titre</p>
+								<label for="label" class="col-formlabel">Prix de Commande</label>
+								<p th:text="${commande.prix}">¨Prix de Commande</p>
 							</div>
-
 							<div class="form-group col-md-6">
-
-								<label for="label" class="col-form-label">Prix</label>
-
-								<p th:text="${book.prix}">Prix</p>
+								<label for="label" class="col-formlabel">Livre Souhaité</label>
+								<p th:text="${commande.getBook.titre}">¨Livre Souhaité</p>
 							</div>
-
 							<div class="form-group col-md-6">
-
-								<label for="label" class="col-form-label">Auteur</label>
-
-								<p th:text="${book.author}">Auteur</p>
-							</div>
-
-							<div class="form-group col-md-6">
-
-								<label for="label" class="col-form-label">Image</label> <br>
-								<img alt="Image" th:src="@{'/uploads/'+${book.picture}}" width="250" height="250" />
+								<label for="label" class="col-formlabel">Couverture</label> <img
+									alt="Image" th:src="@{'/uploads/'+${commande.getBook.picture}}" width="250" height="250" />
 							</div>
 
 							<div class="form-group col-md-8">
+								<a th:href="@{/commande/list}"> <input type="button" 
+									class="btn btn-primary" value="Retour vers liste de commande"></a>
 
-
-								<a th:href="@{/book/list}"> <input type="button" class="btn btn-primary" value="Retour liste des livres"></a>
 							</div>
 						</div>
 					</form>

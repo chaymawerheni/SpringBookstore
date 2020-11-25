@@ -15,13 +15,15 @@
     <div class="container my-2">
         <div class="card">
         
-        <h1 align="center">List des livres</h1>
+        <h1 align="center">Liste des livres</h1>
             <div class="card-body">
                 <div th:switch="${books}" class="container my-5">
                     <p class="my-5">
-                      <a th:href="@{'/book/add/'}" class="btn btn-primary"><i
-							class="fas fa-user-plus ml-2"> Add Book</i></a>
+                      <a th:href="@{'/book/add/'}" class="btn btn-primary"><i class="fas fa-user-plus ml-2">  Ajouter un livre </i></a>
+                     <a th:href="@{'/commande/list/'}" class="btn btn-primary"> <i class="fa fa-shopping-bag">  Afficher Commandes</i></a>
+                   
                     </p>
+                  
                     <div class="col-md-10">
                         <h2 th:case="null">No Books yet!</h2>
                         <div th:case="*">
@@ -31,8 +33,8 @@
                                         <th>Titre</th>
                                         <th>Author</th>
                                         <th>Prix</th>
-                                        <th>Date de creation</th>
-                                        <th>Show</th>
+                                        <th>Date</th>
+                                        <th>Details</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
@@ -43,7 +45,7 @@
                                         <td th:text="${book.author}"></td>
                                         <td th:text="${book.prix}"></td>
                                         <td th:text="${book.datecreation}"></td>
-                                        <td><a th:href="@{/book/show/{id}(id=${book.id})}" class="btn btn-primary"><i class="fas fa-user-show ml-2"></i>Show details</a></td>
+                                        <td><a th:href="@{/book/show/{id}(id=${book.id})}" class="btn btn-primary"><i class="far fa-eye"></i></a></td>
                                         <td><a th:href="@{/book/edit/{id}(id=${book.id})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
                                         <td><a th:href="@{/book/delete/{id}(id=${book.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
                                     </tr>

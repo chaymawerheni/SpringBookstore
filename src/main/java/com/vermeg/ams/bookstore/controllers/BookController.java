@@ -102,10 +102,7 @@ public class BookController {
             book.setId(id);
             return "book/updateBook";
         }*/
-       
-    	
-    	
-    	
+	
     	StringBuilder fileName = new StringBuilder();
 		MultipartFile file = files[0];
 		Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());

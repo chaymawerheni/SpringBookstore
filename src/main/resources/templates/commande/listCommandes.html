@@ -10,15 +10,15 @@
     <!-- <link rel="stylesheet" href="../css/shards.min.css"> -->
 </head>
 <body>
-	<h2 align="center">List of Commands</h2>
+	<h2 align="center">Liste des Commandes</h2>
 	<div class="container my-2">
 		<div class="card">
 			<div class="card-body">
 				<div th:switch="${commandes}" class="container my-5">
 					<p class="my-5">
 
-						<a th:href="@{'/commande/add/'}" class="btn btn-primary"><i
-							class="fas fa-user-plus ml-2"> Add Command</i></a>
+						<a th:href="@{'/commande/add/'}" class="btn btn-primary"><i class="fas fa-user-plus ml-2"> Ajouter Commande</i></a>
+						<a th:href="@{'/book/list/'}" class="btn btn-primary"><i class="fa fa-book" > Liste des Livres</i></a>
 					</p>
 
 					<div class="col-md-10">
@@ -30,10 +30,10 @@
 
 								<thead>
 									<tr>
-										<th>Date de commande</th>
+										<th>Date</th>
 										<th>Prix</th>
 										<th>Titre de livre</th>
-										<th>Show</th>
+										<th>Details</th>
 										<th>Edit</th>
 										<th>Delete</th>
 									</tr>
@@ -43,7 +43,7 @@
 										<td th:text="${commande.datecommande}"></td>
 										<td th:text="${commande.prix}"></td>
 										<td th:text="${commande.book.titre}"></td>
-										<td><a th:href="@{/commande/show/{id}(id=${commande.id})}" class="btn btn-primary"><i class="fas fa-user-show ml-2"></i>Show details</a></td>
+										<td><a th:href="@{/commande/show/{id}(id=${commande.id})}" class="btn btn-primary"><i class="far fa-eye"></i></a></td>
                                         <td><a th:href="@{/commande/edit/{id}(id=${commande.id})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
                                         <td><a th:href="@{/commande/delete/{id}(id=${commande.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
                                     
