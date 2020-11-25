@@ -74,5 +74,71 @@ public class CommandeController {
 		model.addAttribute("commandes", commandeRepository.findAll());
 		return "commande/listCommandes";
 	}
+	/* @GetMapping("edit/{id}")
+    public String showCommandeFormToUpdate(@PathVariable("id") long id, Model model) {
+        Commande commande = commandeRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid commande Id:" + id));
+        model.addAttribute("commande", commande);
+        return "commande/updateCommande";
+    }
+    @PostMapping("update/{id}")
+    public String updateCommande(@PathVariable("id") long id, @Valid Commande commande, BindingResult result,Model model,
+		@RequestParam(name = "commandeId", required = false) Long p) {
+
+       /* if (result.hasErrors()) {
+            book.setId(id);
+            return "book/updateBook";
+        }
+    	
+          commandeRepository.save(commande);
+	    model.addAttribute("commandes", commandeRepository.findAll());
+	
+        return "commande/listCommande";
+    }  */
+		
+	
+	@GetMapping("edit/{id}")
+	 public String showCommandeFormToUpdate(@PathVariable("id") long id, Model
+	model) {
+	 Commande commande = commandeRepository.findById(id)
+	 .orElseThrow(()->new IllegalArgumentException("Invalid book Id:" + id));
+	 
+
+	 model.addAttribute("commande", commande);
+	 model.addAttribute("books", bookRepository.findAll());
+	 model.addAttribute("idBook", commande.getBook().getId());
+
+	 return "commande/updateCommande";
+	 }
+	
+	@PostMapping("edit/{id}")
+	 public String updateCommande(@PathVariable("id") long id, @Valid Commande commande, BindingResult result,
+	 Model model, @RequestParam(name = "bookId", required = false) Long
+	p) {
+	 if (result.hasErrors()) {
+	 commande.setId(id);
+	 return "commande/updateCommande";
+	 }
+
+	 Book book = bookRepository.findById(p)
+	 .orElseThrow(()-> new IllegalArgumentException("Invalid book Id:" + p));
+	 commande.setBook(book);
+
+	 commandeRepository.save(commande);
+	 model.addAttribute("commandes", commandeRepository.findAll());
+	 return "commande/listCommandes";
+	 }
+	@GetMapping("show/{id}")
+	 public String showCommandeDetails(@PathVariable("id") long id, Model model)
+	{
+	 Commande commande = commandeRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid book Id:" + id));
+
+	 model.addAttribute("commande", commande);
+
+	 return "commande/showCommande";
+	 }
+
+
+
+	
 
 }

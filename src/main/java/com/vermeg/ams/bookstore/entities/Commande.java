@@ -78,6 +78,7 @@ public class Commande {
 	public String toString() {
 		return "Commande [id=" + id + ", datecommande=" + datecommande + ", prix=" + prix + ", book=" + book.getId() + "]";
 	}
+	
 
 	
 
