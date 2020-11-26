@@ -23,7 +23,7 @@ import com.vermeg.ams.bookstore.entities.Book;
 import com.vermeg.ams.bookstore.exception.ResourceNotFoundException;
 import com.vermeg.ams.bookstore.repository.BookRepository;
 
-//@RestController
+@RestController
 @RequestMapping({ "/book" })
 public class BookRestController {
 	

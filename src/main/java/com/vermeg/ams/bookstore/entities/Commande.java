@@ -59,9 +59,13 @@ public class Commande {
 		this.prix = prix;
 	}
 	
-	/**** Many To One ****/
-
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	// **** Many To One ****/
+	/****
+	 *
+	 * FetchType.LAZY = Doesn’t load the relationships unless explicitly “asked for”
+	 * via getter FetchType.EAGER = Loads ALL relationships
+	 */
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "book_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Book book;
@@ -73,6 +77,7 @@ public class Commande {
 	public void setBook(Book book) {
 		this.book = book;
 	}
+	
 
 	@Override
 	public String toString() {

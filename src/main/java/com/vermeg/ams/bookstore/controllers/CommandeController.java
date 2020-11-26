@@ -25,7 +25,7 @@ import com.vermeg.ams.bookstore.entities.Commande;
 import com.vermeg.ams.bookstore.repository.BookRepository;
 import com.vermeg.ams.bookstore.repository.CommandeRepository;
 
-@Controller
+//@Controller
 @RequestMapping("/commande/")
 public class CommandeController {
 
