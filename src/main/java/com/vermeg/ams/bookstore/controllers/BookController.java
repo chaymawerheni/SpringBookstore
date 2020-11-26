@@ -1,6 +1,7 @@
 package com.vermeg.ams.bookstore.controllers;
 
 import javax.validation.Valid;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,7 +25,7 @@ import com.vermeg.ams.bookstore.repository.BookRepository;
 import java.util.List;
 import javax.validation.Valid;
 
-@Controller
+
 @RequestMapping("/book/")
 
 public class BookController {
@@ -102,10 +103,7 @@ public class BookController {
             book.setId(id);
             return "book/updateBook";
         }*/
-       
-    	
-    	
-    	
+	
     	StringBuilder fileName = new StringBuilder();
 		MultipartFile file = files[0];
 		Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
@@ -131,13 +129,13 @@ public class BookController {
 	
         return "book/listeBooks";
     }
-    @GetMapping("show/{id}")
+    /*@GetMapping("show/{id}")
     public String showArticleDetails(@PathVariable("id") long id, Model model)
     {
     Book book = bookRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid provider Id:" + id));
     model.addAttribute("book", book);
     return "book/showBook";
-    }
+    }*/
 
 
 }

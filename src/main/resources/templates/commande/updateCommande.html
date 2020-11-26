@@ -4,32 +4,41 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Update Commande</title>
+    <title>Modifier Commande</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 </head>
 <body>
     <div class="container my-5">
-        <h3> Update Commande</h3>
+        <h3> Modifier Commande</h3>
         <div class="card">
             <div class="card-body">
                 <div class="col-md-8">
-                    <form action="#" th:action="@{/commande/edit}" th:object="${commande}" method="post">
+                    <form action="#" th:action="@{/commande/update/{id}(id=${commande.id})}" th:object="${commande}" method="post">
                         <div class="row">
                         
                             <div class="form-group col-md-8">
-                                <label for="label" class="col-form-label">Date de commande</label> <input type="text" th:field="*{datecommande}" class="form-control" id="datecommande" placeholder="Date de commande"> <span th:if="${#fields.hasErrors('datecommande')}" th:errors="*{datecommande}" class="text-danger"></span>
+                                <label for="label" class="col-form-label">Date de commande</label> <input type="date" th:field="*{datecommande}" class="form-control" id="datecommande" placeholder="Date de commande"> <span th:if="${#fields.hasErrors('datecommande')}" th:errors="*{datecommande}" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-8">
-                                <label for="label" class="col-form-label">Prix</label> <input type="text" th:field="*{prix}" class="form-control" id="prix" placeholder="Prix"> <span th:if="${#fields.hasErrors('prix')}" th:errors="*{prix}" class="text-danger"></span>
+                                <label for="label" class="col-form-label">Quantité</label> <input type="number" th:field="*{prix}" class="form-control" id="prix" placeholder="Prix"> <span th:if="${#fields.hasErrors('prix')}" th:errors="*{prix}" class="text-danger"></span>
                             </div>
 
-                         
-                            <div class="form-group col-md-8">
-                                <input type="submit" class="btn btn-primary" value="Update Commande">
+							<div class="form-group col-md-8">
+								<label for="book" class="col-form-label">Liste des livres</label> 
+								
+								<select name="bookId" class="form-control">
+									<option th:value="${idBook}" th:text="${commande.book.titre}"/>
+									<option disabled="true">---------------------------------------------------------</option>
+									<option th:each="b: ${books}" th:value="${b.id}" th:text="${b.titre}" />
+								</select>
+							</div>
+
+							<div class="form-group col-md-8">
+                                <input type="submit" class="btn btn-primary" value="Confirmer modification">
                             </div>
-                            
+                          </div>  
         
                     </form>
                 </div>

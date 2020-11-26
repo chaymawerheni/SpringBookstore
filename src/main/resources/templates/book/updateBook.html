@@ -32,7 +32,9 @@
                                 <label for="datecreation" class="col-form-label">Date de la creation</label> <input type="date" th:field="*{datecreation}" class="form-control" id="datecreation" placeholder="Date de la creation"> <span th:if="${#fields.hasErrors('datecreation')}" th:errors="*{datecreation}" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-8"> 
-                           	    <label for="price" class="col-form-label">Picture</label> <input class="form-control" type="file" name="files" multiple>
+                           	    <label for="price" class="col-form-label">Picture</label> <input class="form-control" type="file" name="files" multiple >
+                   			
+                   			<br><br>
                    			<div class="form-group col-md-6">
 
 								<img alt="Image" th:src="@{'/uploads/'+${book.picture}}" width="250" height="250" />

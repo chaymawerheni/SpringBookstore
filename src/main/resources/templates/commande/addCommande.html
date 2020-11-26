@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div class="container my-5">
-		<h3 align="center">Add Command</h3>
+		<h3 align="center">Ajouter un commande</h3>
 		<div class="card">
 			<div class="card-body">
 				<div class="col-md-10">
@@ -19,10 +19,10 @@
 				<form action="#" th:action="@{/commande/add}" th:object="${commande}" method="post">
                         <div class="row">
                             <div class="form-group col-md-8">
-                                <label for="datecommande" class="col-form-label">Date de la creation</label> <input type="date" th:field="*{datecommande}" class="form-control" id="datecommande" placeholder="Date de la creation"> <span th:if="${#fields.hasErrors('datecommande')}" th:errors="*{datecommande}" class="text-danger"></span>
+                                <label for="datecommande" class="col-form-label">Date de livraison </label> <input type="date" th:field="*{datecommande}" class="form-control" id="datecommande" placeholder="Date de la creation"> <span th:if="${#fields.hasErrors('datecommande')}" th:errors="*{datecommande}" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-8">
-                                <label for="prix" class="col-form-label">Prix</label> <input type="number" th:field="*{prix}" class="form-control" id="prix"> <span th:if="${#fields.hasErrors('prix')}" th:errors="*{prix}" class="text-danger"></span>
+                                <label for="prix" class="col-form-label">Quantité</label> <input type="number" th:field="*{prix}" class="form-control" id="prix"> <span th:if="${#fields.hasErrors('prix')}" th:errors="*{prix}" class="text-danger"></span>
                             </div>
 
 							<div class="form-group col-md-8">

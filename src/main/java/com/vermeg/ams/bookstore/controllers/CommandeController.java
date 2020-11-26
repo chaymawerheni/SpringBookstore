@@ -63,6 +63,7 @@ public class CommandeController {
 		commande.setBook(book);
 
 		commandeRepository.save(commande);
+		
 		return "redirect:list";
 		
 	}
@@ -95,12 +96,12 @@ public class CommandeController {
         return "commande/listCommande";
     }  */
 		
-	
+	//@ResponseBody
 	@GetMapping("edit/{id}")
-	 public String showCommandeFormToUpdate(@PathVariable("id") long id, Model
-	model) {
-	 Commande commande = commandeRepository.findById(id)
-	 .orElseThrow(()->new IllegalArgumentException("Invalid book Id:" + id));
+	 public String showCommandeFormToUpdate(@PathVariable("id") long id, Model model) {
+	 
+	
+	 Commande commande = commandeRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid book Id:" + id));
 	 
 
 	 model.addAttribute("commande", commande);
@@ -110,21 +111,22 @@ public class CommandeController {
 	 return "commande/updateCommande";
 	 }
 	
-	@PostMapping("edit/{id}")
+	//@ResponseBody
+	@PostMapping("update/{id}")
 	 public String updateCommande(@PathVariable("id") long id, @Valid Commande commande, BindingResult result,
-	 Model model, @RequestParam(name = "bookId", required = false) Long
-	p) {
-	 if (result.hasErrors()) {
+	 Model model, @RequestParam(name = "bookId", required = false) Long p) {
+	 
+		if (result.hasErrors()) {
 	 commande.setId(id);
 	 return "commande/updateCommande";
 	 }
 
-	 Book book = bookRepository.findById(p)
-	 .orElseThrow(()-> new IllegalArgumentException("Invalid book Id:" + p));
+	 Book book = bookRepository.findById(p).orElseThrow(()-> new IllegalArgumentException("Invalid book Id:" + p));
 	 commande.setBook(book);
 
 	 commandeRepository.save(commande);
 	 model.addAttribute("commandes", commandeRepository.findAll());
+	 
 	 return "commande/listCommandes";
 	 }
 	@GetMapping("show/{id}")
