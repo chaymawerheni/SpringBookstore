@@ -1,6 +1,7 @@
 package com.vermeg.ams.bookstore.controllers;
 
 import javax.validation.Valid;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -128,13 +129,13 @@ public class BookController {
 	
         return "book/listeBooks";
     }
-    @GetMapping("show/{id}")
+    /*@GetMapping("show/{id}")
     public String showArticleDetails(@PathVariable("id") long id, Model model)
     {
     Book book = bookRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid provider Id:" + id));
     model.addAttribute("book", book);
     return "book/showBook";
-    }
+    }*/
 
 
 }
