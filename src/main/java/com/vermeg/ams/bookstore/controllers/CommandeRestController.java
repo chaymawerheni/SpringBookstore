@@ -9,7 +9,7 @@ import com.vermeg.ams.bookstore.exception.ResourceNotFoundException;
 import java.util.List;
 import javax.validation.Valid;
 
-@RestController
+/*@RestController
 @RequestMapping({"/commande"})
 public class CommandeRestController {
 	private final CommandeRepository commandeRepository;
@@ -23,7 +23,7 @@ public class CommandeRestController {
 	/*@Autowired
 	private ArticleRepository articleRepository;
 	@Autowired
-	private ProviderRepository providerRepository;*/
+	private ProviderRepository providerRepository;
 	@GetMapping("/list")
 	public List<Commande> getAllCommandes() {
 	return (List<Commande>) commandeRepository.findAll();
@@ -67,4 +67,4 @@ public class CommandeRestController {
 	}
 	
 	}
-
+*/

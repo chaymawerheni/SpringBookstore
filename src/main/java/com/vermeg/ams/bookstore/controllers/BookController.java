@@ -25,7 +25,7 @@ import com.vermeg.ams.bookstore.repository.BookRepository;
 import java.util.List;
 import javax.validation.Valid;
 
-//@Controller
+@Controller
 @RequestMapping("/book/")
 
 public class BookController {
@@ -129,13 +129,13 @@ public class BookController {
 	
         return "book/listeBooks";
     }
-    /*@GetMapping("show/{id}")
+    @GetMapping("show/{id}")
     public String showArticleDetails(@PathVariable("id") long id, Model model)
     {
-    Book book = bookRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid provider Id:" + id));
+    Book book = bookRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid book Id:" + id));
     model.addAttribute("book", book);
     return "book/showBook";
-    }*/
+    }
 
 
 }

@@ -23,7 +23,7 @@ import com.vermeg.ams.bookstore.entities.Book;
 import com.vermeg.ams.bookstore.exception.ResourceNotFoundException;
 import com.vermeg.ams.bookstore.repository.BookRepository;
 
-@RestController
+/*@RestController
 @RequestMapping({ "/book" })
 public class BookRestController {
 	
@@ -61,7 +61,7 @@ public class BookRestController {
 			bookRepository.delete(book);
 			return ResponseEntity.ok().build();
 		}).orElseThrow(() -> new ResourceNotFoundException("Book Id " + bookId + " not found"));
-	}*/
+	}
 	@DeleteMapping("/{bookId}")
     public Book deleteBook(@PathVariable Long bookId) {
 
@@ -75,4 +75,4 @@ public class BookRestController {
 		return book;
        
     }
-}
+}*/

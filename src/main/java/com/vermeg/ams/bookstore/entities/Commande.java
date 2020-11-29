@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
-
+import com.vermeg.ams.bookstore.entities.Book;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -25,14 +25,18 @@ public class Commande {
 	private String datecommande;
 	
 	@Column(name = "prix")
-	private float prix;
+	private double prix;
+	
+	@Column(name = "client")
+	private String client;
 
 	public Commande() {}
 
-	public Commande(String datecommande, float prix) {
+	public Commande(String datecommande, double prix, String client) {
 
 		this.datecommande = datecommande;
 		this.prix = prix;
+		this.client=client;
 	}
 
 	public long getId() {
@@ -51,38 +55,30 @@ public class Commande {
 		this.datecommande = datecommande;
 	}
 
-	public float getPrix() {
+	public double getPrix() {
 		return prix;
 	}
 
-	public void setPrix(float prix) {
+	public void setPrix(double prix) {
 		this.prix = prix;
 	}
 	
-	// **** Many To One ****/
-	/****
-	 *
-	 * FetchType.LAZY = Doesn’t load the relationships unless explicitly “asked for”
-	 * via getter FetchType.EAGER = Loads ALL relationships
-	 */
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name = "book_id", nullable = false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	private Book book;
-
-	public Book getBook() {
-		return book;
+	public String getClient() {
+		return client;
 	}
 
-	public void setBook(Book book) {
-		this.book = book;
+	public void setClient(String client) {
+		this.client = client;
 	}
-	
 
 	@Override
 	public String toString() {
-		return "Commande [id=" + id + ", datecommande=" + datecommande + ", prix=" + prix + ", book=" + book.getId() + "]";
+		return "Commande [id=" + id + ", datecommande=" + datecommande + ", prix=" + prix + ", client=" + client + "]";
 	}
+
+
+
+	
 	
 
 	

@@ -34,6 +34,7 @@
                                         <th>Author</th>
                                         <th>Prix</th>
                                         <th>Date</th>
+                                        <th>Nbr de stock</th>
                                         <th>Details</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -45,6 +46,7 @@
                                         <td th:text="${book.author}"></td>
                                         <td th:text="${book.prix}"></td>
                                         <td th:text="${book.datecreation}"></td>
+                                        <td th:text="${book.nbrstock}"></td>
                                         <td><a th:href="@{/book/show/{id}(id=${book.id})}" class="btn btn-primary"><i class="far fa-eye"></i></a></td>
                                         <td><a th:href="@{/book/edit/{id}(id=${book.id})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
                                         <td><a th:href="@{/book/delete/{id}(id=${book.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>

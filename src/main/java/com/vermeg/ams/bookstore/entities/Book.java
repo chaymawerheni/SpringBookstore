@@ -18,31 +18,45 @@ public class Book {
     @Column(name = "titre")
     private String titre;
     
-    @NotBlank(message = "author is mandatory")
+
     @Column(name = "author")
     private String author;
     
-    @NotBlank(message = "Prix is mandatory")
+   
     @Column(name = "prix")
-    private String prix;
+    private double prix;
 
-    @NotBlank(message = "DateCreation is mandatory")
+    
     @Column(name = "datecreation")
     private String datecreation;
     
     @Column(name = "picture")
     private String picture;
     
+    @Column(name = "nbrstock")
+    private int  nbrstock;
+    
     
     public Book() {}
 
-	public Book(String titre, String author, String prix, String dateCreation) {
+	public Book(String titre, String author, double prix, String dateCreation, int nbrstock) {
 		
 	
 		this.titre = titre;
 		this.author = author;
 		this.prix = prix;
 		this.datecreation = dateCreation;
+		this.nbrstock=nbrstock;
+	}
+	
+	
+
+	public int getNbrstock() {
+		return nbrstock;
+	}
+
+	public void setNbrstock(int nbrstock) {
+		this.nbrstock = nbrstock;
 	}
 
 	public long getId() {
@@ -79,11 +93,11 @@ public class Book {
 		this.author = author;
 	}
 
-	public String getPrix() {
+	public double getPrix() {
 		return prix;
 	}
 
-	public void setPrix(String prix) {
+	public void setPrix(double prix) {
 		this.prix = prix;
 	}
 	
@@ -95,16 +109,13 @@ public class Book {
 		return picture;
 		}
 
-	@Override
-	public String toString() {
-		return "Book [id=" + id + ", titre=" + titre + ", author=" + author + ", prix=" + prix + ", datecreation="
-				+ datecreation + "]";
-	}
+		@Override
+		public String toString() {
+			return "Book [id=" + id + ", titre=" + titre + ", author=" + author + ", prix=" + prix + ", datecreation="
+					+ datecreation + ", picture=" + picture + ", nbrstock=" + nbrstock + "]";
+		}
 
-
-
-   
-    
+  
     
 }
 
