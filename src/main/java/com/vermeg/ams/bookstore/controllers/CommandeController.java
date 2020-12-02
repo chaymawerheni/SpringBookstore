@@ -65,17 +65,18 @@ public class CommandeController {
 	//@ResponseBody
 	public String addCommande(@Valid Commande commande, BindingResult result,
 			@RequestParam(name = "bookId", required = false) List<Long> lb) {
-
-		//Book book = bookRepository.findById(b).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + b));
-		//commande.setBook(book);
-		//System.out.println(lb);
 		
 		double prixTotale=0;
-		
+
+		//calcul du prix totale
 		for(long idB : lb) {
 			
 			Book book = bookRepository.findById(idB).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + idB));	
-			prixTotale=prixTotale+book.getPrix();	
+		
+			if(book.getNbrstock()>1) {
+				
+				prixTotale=prixTotale+book.getPrix();
+			}		
 		}
 		
 		commande.setPrix(prixTotale);
@@ -84,99 +85,131 @@ public class CommandeController {
 		for(long idB : lb) {
 			
 			Book book = bookRepository.findById(idB).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + idB));	
-			DetailsCommande dc= new DetailsCommande(book.getPrix());
-			dc.setBook(book);
-			book.setNbrstock(book.getNbrstock()-1);
-			dc.setPrixachat(book.getPrix());
-			dc.setCommande(commande);
 			
-			detailsComRepository.save(dc);
-			
+			if(book.getNbrstock()>1) {
+				
+				DetailsCommande dc= new DetailsCommande(book.getPrix());
+				dc.setBook(book);
+				
+				book.setNbrstock(book.getNbrstock()-1);
+				dc.setPrixachat(book.getPrix());
+				dc.setCommande(commande);
+				
+				detailsComRepository.save(dc);
+		
+			}
+		
 		}
 		
 		return "redirect:list";
 		
 	}
 	
-	/*@GetMapping("delete/{id}")
-	public String deleteCommande(@PathVariable("id") long id, Model model) {
+	@GetMapping("delete/{id}")
+	//@ResponseBody
+    public String deleteCommande(@PathVariable("id") long id, Model model) {
+		
 		Commande commande = commandeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid commande Id:" + id));
 		
-		List<DetailsCommande> ldc = new ArrayList<>();
+		List<DetailsCommande> dc = detailsComRepository.findAllByCommandeId(commande.getId());
 		
+		for (DetailsCommande d : dc) {
+				detailsComRepository.delete(d);		
+		}
 		
-		DetailsCommande dc= detailsComRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid commande Id:" + id));
-		detailsComRepository.delete(dc);
 		commandeRepository.delete(commande);
+		
 		model.addAttribute("commandes", commandeRepository.findAll());
 		return "commande/listCommandes";
-	}
-	/* @GetMapping("edit/{id}")
-    public String showCommandeFormToUpdate(@PathVariable("id") long id, Model model) {
-        Commande commande = commandeRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid commande Id:" + id));
-        model.addAttribute("commande", commande);
-        return "commande/updateCommande";
     }
-    @PostMapping("update/{id}")
-    public String updateCommande(@PathVariable("id") long id, @Valid Commande commande, BindingResult result,Model model,
-		@RequestParam(name = "commandeId", required = false) Long p) {
-
-       /* if (result.hasErrors()) {
-            book.setId(id);
-            return "book/updateBook";
-        }
-    	
-          commandeRepository.save(commande);
-	    model.addAttribute("commandes", commandeRepository.findAll());
 	
-        return "commande/listCommande";
-    }  */
-		
-	//@ResponseBody
-	@GetMapping("edit/{id}")
-	 public String showCommandeFormToUpdate(@PathVariable("id") long id, Model model) {
-	 
-	
+	 @GetMapping("show/{id}")
+	 public String showCommandeDetails(@PathVariable("id") long id, Model model)
+	{
+		 
 	 Commande commande = commandeRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid book Id:" + id));
-	 
 
 	 model.addAttribute("commande", commande);
-	 model.addAttribute("books", bookRepository.findAll());
-	// model.addAttribute("idBook", commande.getBook().getId());
-
-	 return "commande/updateCommande";
+	 model.addAttribute("detailscom", detailsComRepository.findAllByCommandeId(id));
+	
+	 return "commande/showCommande";
 	 }
 	
+	 @GetMapping("edit/{id}")
+    public String showCommandeFormToUpdate(@PathVariable("id") long id, Model model) {
+		 
+        Commande commande = commandeRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid commande Id:" + id));
+        model.addAttribute("commande", commande);
+        model.addAttribute("books", bookRepository.findAll());
+        
+        return "commande/updateCommande";
+    }
+
+	 
 	//@ResponseBody
 	@PostMapping("update/{id}")
 	 public String updateCommande(@PathVariable("id") long id, @Valid Commande commande, BindingResult result,
-	 Model model, @RequestParam(name = "bookId", required = false) Long p) {
+	 Model model, @RequestParam(name = "bookId", required = false) List<Long> lb) {
 	 
 		if (result.hasErrors()) {
 	 commande.setId(id);
 	 return "commande/updateCommande";
-	 }
+	 }	
+		//suppression des details commandes
+		List<DetailsCommande> dcom = detailsComRepository.findAllByCommandeId(commande.getId());
+		
+		//avant de supprimer les lignes des commandes on incremente le nbr de stock des lives 
+		//selectionnee avant la modif pour qu'on peut modifier les livres
+		
+		for (DetailsCommande d : dcom) {
+			
+			Book book = bookRepository.findById(d.getBook().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + d.getBook().getId()));
+			
+			book.setNbrstock(d.getBook().getNbrstock()+1);
+			bookRepository.save(book);
+		}
+		//suppression des details com
+		for (DetailsCommande d : dcom) {
+				detailsComRepository.delete(d);		
+		}
+		
+		double prixTotale=0;
 
-	 Book book = bookRepository.findById(p).orElseThrow(()-> new IllegalArgumentException("Invalid book Id:" + p));
-	 //commande.setBook(book);
-
-	 commandeRepository.save(commande);
-	 model.addAttribute("commandes", commandeRepository.findAll());
+		//calcul du prix totale
+		for(long idB : lb) {
+			
+			Book book = bookRepository.findById(idB).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + idB));	
+		
+			if(book.getNbrstock()>1) {
+				
+				prixTotale=prixTotale+book.getPrix();
+			}		
+		}
+		
+		commande.setPrix(prixTotale);
+		commandeRepository.save(commande);
+		//creations des nouveaux lignes apres la modifications
+		for(long idB : lb) {
+			
+			Book book = bookRepository.findById(idB).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + idB));	
+	
+			if(book.getNbrstock()>1) {
+				
+				DetailsCommande dc= new DetailsCommande(book.getPrix());
+				dc.setBook(book);
+				
+				book.setNbrstock(book.getNbrstock()-1);
+				dc.setPrixachat(book.getPrix());
+				dc.setCommande(commande);
+				
+				detailsComRepository.save(dc);
+		
+			}	
+		
+		}
+		model.addAttribute("commandes", commandeRepository.findAll());
 	 
 	 return "commande/listCommandes";
 	 }
-	@GetMapping("show/{id}")
-	 public String showCommandeDetails(@PathVariable("id") long id, Model model)
-	{
-	 Commande commande = commandeRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid book Id:" + id));
-
-	 model.addAttribute("commande", commande);
-
-	 return "commande/showCommande";
-	 }
-
-
-
 	
-
 }

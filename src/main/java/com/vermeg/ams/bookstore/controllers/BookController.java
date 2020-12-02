@@ -56,12 +56,12 @@ public class BookController {
     public String addBook(@Valid Book book, BindingResult result,
 			@RequestParam(name = "bookId", required = false) Long p,
 			@RequestParam("files") MultipartFile[] files) {
-       /* if (result.hasErrors()) {
-            return "book/addBook";
-        }
-        //System.out.println(book);
-        bookRepository.save(book);
-        return "redirect:list";*/
+    	
+    	
+		        if (result.hasErrors()) {
+		            return "book/addBook";
+		        }
+        
     	// part upload
     			StringBuilder fileName = new StringBuilder();
     			MultipartFile file = files[0];

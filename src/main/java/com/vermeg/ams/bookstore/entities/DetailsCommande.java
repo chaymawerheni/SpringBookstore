@@ -23,6 +23,12 @@ public class DetailsCommande {
 	
 	@Column(name = "prixachat")
 	private double prixachat;
+	
+	
+
+	public DetailsCommande() {
+		super();
+	}
 
 	public DetailsCommande(double prixachat) {
 		
@@ -35,6 +41,14 @@ public class DetailsCommande {
 
 	public void setPrixachat(double prixachat) {
 		this.prixachat = prixachat;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	/**** Many To One ****/

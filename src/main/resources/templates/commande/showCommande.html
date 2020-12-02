@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<style>
+      .nolist {
+      list-style: none ;
+      }
+ </style>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>Details de Commandes </title>
@@ -21,29 +26,70 @@
 			<div class="card-body">
 				<div class="col-md-8">
 					<form action="#" method="">
-						<div class="row">
+					
 							<div class="form-group col-md-6">
-								<label for="label" class="col-formlabel">Date de Commande</label>
+								<h3>Details :</h3><br>
+							</div>
+							
+						<div class="row">
+							
+							<div class="form-group col-md-6">
+								<b><label for="label" class="col-formlabel">Nom du client :</label></b>
+								<p th:text="${commande.client}">Nom du client</p>
+							</div>
+							<div class="form-group col-md-6">
+								<b><label for="label" class="col-formlabel">Date de Commande :</label></b>
 								<p th:text="${commande.datecommande}">Date de Commande</p>
 							</div>
+							
+							<div class="form-group col-md-6">
+								<b><label for="label" class="col-formlabel">Id de commande :</label></b>
+								<p th:text="${commande.id}">Id de commande</p>
+							</div>
 
 							<div class="form-group col-md-6">
-								<label for="label" class="col-formlabel">Prix de Commande</label>
+								<b><label for="label" class="col-formlabel">Prix de Commande totale:</label></b>
 								<p th:text="${commande.prix}">¨Prix de Commande</p>
 							</div>
+							
+							
 							<div class="form-group col-md-6">
-								<label for="label" class="col-formlabel">Livre Souhaité</label>
-								<p th:text="${commande.getBook.titre}">¨Livre Souhaité</p>
+								<h3>Details des livres:</h3>
 							</div>
-							<div class="form-group col-md-6">
-								<label for="label" class="col-formlabel">Couverture</label> <img
-									alt="Image" th:src="@{'/uploads/'+${commande.getBook.picture}}" width="250" height="250" />
+							
+							
+							
+							 <div class="form-group ">
+							 
+							 <ul class="nolist" th:each="d : ${detailscom}" >
+							 	
+							 	
+								<li class="col-formlabel"><b>Identifiant du livre : </b><label  th:text="${d.getBook.id}"></label></li>
+							 	<li class="col-formlabel"> <b></b> 
+					
+					
+							 			<img  alt="Image" th:src="@{'/uploads/'+${d.getBook.picture}}" width="150" height="150"/>
+							 	
+							 	</li>
+							 	<li class="col-formlabel"><b>Titre de livre : </b><label  th:text="${d.getBook.titre}"></label></li>
+							 	<li class="col-formlabel"><b>Prix de livre : </b><label  th:text="${d.getBook.prix}"></label></li>
+							 	<li class="col-formlabel"><b>Auteur de livre : </b><label  th:text="${d.getBook.author}"></label></li>
+							 	<li>________________________________________</li>
+							 </ul>
+								
 							</div>
+							
+							 
+							
+							
+							
+							
+							
+							
+							
 
 							<div class="form-group col-md-8">
-								<a th:href="@{/commande/list}"> <input type="button" 
-									class="btn btn-primary" value="Retour vers liste de commande"></a>
-
+								<a th:href="@{/commande/list}"> <input type="button" class="btn btn-primary" value="Retour vers liste de commande"></a>
 							</div>
 						</div>
 					</form>
