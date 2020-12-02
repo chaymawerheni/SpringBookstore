@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+
+    <div class="starter-template">
+        <h1>Welcome to our Bookstore Managment System Dashboard</h1>
+        <h2>1. Visit our Book Store, You must have ADMIN role <a th:href="@{/book/list}">Books</a></h2>
+        <h2>2. Visit our Commands list, You must have USER role<a th:href="@{/commande/list}">Commandes</a></h2>
+        <!--  h2>3. Visit <a th:href="@{/about}">Normal page</a></h2-->
+    </div>
+
+</div>
+<!-- /.container -->
+
+<div th:replace="fragments/footer::footer"></div>
+
+</body>
+</html>
