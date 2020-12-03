@@ -25,7 +25,7 @@ import com.vermeg.ams.bookstore.repository.BookRepository;
 import java.util.List;
 import javax.validation.Valid;
 
-@Controller
+//@Controller
 @RequestMapping("/book/")
 
 public class BookController {

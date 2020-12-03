@@ -44,9 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll() // accès pour tous users
                 .antMatchers("/registration").permitAll() // accès pour tous users
                 
-                
-                
-                
+  
                 .antMatchers("/book/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/commande/**").hasAnyAuthority("ADMIN")
                 
@@ -54,10 +52,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/book/show/**").hasAnyAuthority("USER")
                 
                 
-                .antMatchers("/commande/list").hasAnyAuthority("USER")
-                .antMatchers("/commande/add").hasAnyAuthority("USER")
-                .antMatchers("/commande/show/**").hasAnyAuthority("USER")
-                
+				/*
+				 * .antMatchers("/commande/list").hasAnyAuthority("USER")
+				 * .antMatchers("/commande/add").hasAnyAuthority("USER")
+				 * .antMatchers("/commande/show/**").hasAnyAuthority("USER")
+				 */
                 .antMatchers("/accounts/**").permitAll()
                 .antMatchers("/role/**").permitAll()
                 .anyRequest()
@@ -76,7 +75,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // route de deconnexion ici /logut
                 .logoutSuccessUrl("/login").and().exceptionHandling() // une fois deconnecté redirection vers login
                 
-                .accessDeniedPage("/403"); 
+                .accessDeniedPage("/403") 
+		        .and()
+		        .httpBasic()
+		        .and()
+		        .formLogin().permitAll()
+		        .and()
+		        .logout().permitAll()
+		        .and()
+		        .csrf().disable();
     }
 
    // laisser l'accès aux ressources

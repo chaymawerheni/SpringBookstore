@@ -28,20 +28,24 @@ import com.vermeg.ams.bookstore.entities.DetailsCommande;
 import com.vermeg.ams.bookstore.repository.BookRepository;
 import com.vermeg.ams.bookstore.repository.CommandeRepository;
 import com.vermeg.ams.bookstore.repository.DetailsComRepository;
+import com.vermeg.ams.bookstore.service.CommandeService;
 
-@Controller
+//@Controller
 @RequestMapping("/commande/")
 public class CommandeController {
 
 	private final CommandeRepository commandeRepository;
 	private final BookRepository bookRepository;
 	private final DetailsComRepository detailsComRepository;
+	private final CommandeService commandeService ;
 
 	@Autowired
-	public CommandeController(CommandeRepository commandeRepository, BookRepository bookRepository, DetailsComRepository detailsComRepository) {
+	public CommandeController(CommandeRepository commandeRepository, BookRepository bookRepository,DetailsComRepository detailsComRepository, CommandeService commandeService ) {
+		this.commandeService = commandeService;
 		this.commandeRepository = commandeRepository;
 		this.bookRepository = bookRepository;
 		this.detailsComRepository=detailsComRepository;
+		
 	}
 
 	@GetMapping("list")
@@ -66,20 +70,31 @@ public class CommandeController {
 	public String addCommande(@Valid Commande commande, BindingResult result,
 			@RequestParam(name = "bookId", required = false) List<Long> lb) {
 		
-		double prixTotale=0;
-
-		//calcul du prix totale
-		for(long idB : lb) {
+		List <Book> books = null ;
+		
+		//creation d'une liste des livre
+		
+			for(long idB : lb) {
 			
 			Book book = bookRepository.findById(idB).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + idB));	
 		
-			if(book.getNbrstock()>1) {
-				
-				prixTotale=prixTotale+book.getPrix();
-			}		
-		}
+			books.add(book);
+			}
 		
-		commande.setPrix(prixTotale);
+		//calcul du prix totale
+		/*
+		 * for(long idB : lb) {
+		 * 
+		 * Book book = bookRepository.findById(idB).orElseThrow(() -> new
+		 * IllegalArgumentException("Invalid book Id:" + idB));
+		 * 
+		 * if(book.getNbrstock()>1) {
+		 * 
+		 * prixTotale=prixTotale+book.getPrix(); } }
+		*/
+		
+		
+		commande.setPrix(commandeService.calculateTotalPrice(books));
 		commandeRepository.save(commande);
 		
 		for(long idB : lb) {
@@ -99,8 +114,7 @@ public class CommandeController {
 		
 			}
 		
-		}
-		
+		} 
 		return "redirect:list";
 		
 	}

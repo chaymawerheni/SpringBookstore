@@ -8,6 +8,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.vermeg.ams.bookstore.entities.Book;
+import com.vermeg.ams.bookstore.entities.Commande;
 import com.vermeg.ams.bookstore.exception.ResourceNotFoundException;
 import com.vermeg.ams.bookstore.repository.BookRepository;
+import com.vermeg.ams.bookstore.service.CommandeService;
 
-/*@RestController
+@RestController
 @RequestMapping({ "/book" })
 public class BookRestController {
 	
@@ -32,18 +35,28 @@ public class BookRestController {
 	
 	@Autowired
 	private BookRepository bookRepository;
+	@Autowired
+	private CommandeService commandeService;
 
 	@GetMapping("/list")
 	public List<Book> getAllBook() {
 		return (List<Book>) bookRepository.findAll();
 	}
+	
+	@GetMapping("/count/{bookId}")
+	public double totalPriceBooks(@PathVariable("bookId") List<Long> lb) {
+		
+		List<Book> books= (List<Book>) bookRepository.findAllById(lb);
+		
+
+		return	commandeService.calculateTotalPrice(books);
+	}
+	
 
 	@PostMapping("/add")
     public Book createBook(@Valid @RequestBody Book book) {
         return bookRepository.save(book);
     }
-
-	
 
 	@PutMapping("/{bookId}")
 	public Book updateBook(@PathVariable Long bookId, @Valid @RequestBody Book bookRequest) {
@@ -55,14 +68,14 @@ public class BookRestController {
 		}).orElseThrow(() -> new ResourceNotFoundException("Book Id " + bookId + " not found"));
 	}
 
-	/*@DeleteMapping("/{bookId}")
+	@DeleteMapping("/{bookId}")
 	public ResponseEntity<?> deleteBook(@PathVariable Long bookId) {
 		return bookRepository.findById(bookId).map(book -> {
 			bookRepository.delete(book);
 			return ResponseEntity.ok().build();
 		}).orElseThrow(() -> new ResourceNotFoundException("Book Id " + bookId + " not found"));
 	}
-	@DeleteMapping("/{bookId}")
+	/*@DeleteMapping("/{bookId}")
     public Book deleteBook(@PathVariable Long bookId) {
 
     	
@@ -74,5 +87,5 @@ public class BookRestController {
 		bookRepository.delete(book);
 		return book;
        
-    }
-}*/
+    }*/
+}
